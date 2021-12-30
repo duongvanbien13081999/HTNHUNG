@@ -1,0 +1,61 @@
+@startuml Elevator_system
+class main {
+  {field} +sc_signal<sc_bv<num_floors>> btns_select_floor;
+  {field} +sc_signal<sc_bv<num_floors>> floor_sensor;
+  {field} +sc_buffer<bool> door_open;
+  {field} +sc_signal<sc_bv<num_floors>> btns_out_up;
+  {field} +sc_signal<sc_bv<num_floors>> btns_out_dn;
+  {field} +sc_signal<sc_bv<num_floors>> current_floor;
+  {field} +sc_buffer<bool> cabin_selected;
+  {field} +sc_signal<bool> btn_close;
+  {field} +sc_signal<bool> btn_open;
+  {field} +sc_signal<bool> over_weight_sensor;
+  {field} +sc_signal<bool> dir_up;
+  {field} +sc_signal<bool> dir_dn;
+  {field} +sc_signal<sc_bv<num_floors>> doors_opened;
+  {field} +sc_signal<bool> motor_up;
+  {field} +sc_signal<bool> motor_dn;
+  {field} +sc_signal<sc_bv<num_floors>> led_select_floor;
+  {field} +sc_signal<bool> led_up;
+  {field} +sc_signal<bool> led_down;
+  {field} +sc_signal<bool> overload_alert;
+  {field} +sc_signal<bool> fire_sensor;
+  {field} +sc_signal<bool> fire_alert;
+  {field} +Elevator* elevator;
+  {field} +Software* software;
+}
+class Elevator {
+  {field} +sc_in<sc_bv<num_floors>> btns_select_floor;
+  {field} +sc_in<sc_bv<num_floors>> current_floor;
+  {field} +sc_in<bool> door_open;
+  {field} +sc_in<sc_bv<num_floors>> floor_sensor;
+  {field} +sc_in<bool> btn_close;
+  {field} +sc_in<bool> btn_open;
+  {field} +sc_in<bool> cabin_selected;
+  {field} +sc_in<sc_bv<num_floors>> btns_out_up;
+  {field} +sc_in<sc_bv<num_floors>> btns_out_dn;
+  {field} +sc_in<bool> over_weight_sensor;
+  {field} +sc_out<bool> overload_alert;
+  {field} +sc_out<bool> dir_up;
+  {field} +sc_out<bool> dir_dn;
+  {field} +sc_out<bool> motor_up;
+  {field} +sc_out<bool> motor_dn;
+  {field} +sc_out<sc_bv<num_floors>> doors_opened;
+  {field} +sc_out<sc_bv<num_floors>> led_select_floor;
+  {field} +sc_out<bool> led_up;
+  {field} +sc_out<bool> led_down;
+  {method} +void elevator_system();
+}
+class Software {
+  {field} +sc_in<sc_bv<num_floors>> btns_out_up;
+  {field} +sc_in<sc_bv<num_floors>> btns_out_dn;
+  {field} +sc_in<bool> fire_sensor;
+  {field} +sc_out<bool> fire_alert;
+  {field} +sc_out<bool> door_open;
+  {field} +sc_out<bool> cabin_selected;
+  {method} +void select_cabin();
+  {method} +void alert();
+}
+main o-- Elevator
+main o-- Software
+@enduml
